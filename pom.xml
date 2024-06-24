@@ -32,7 +32,6 @@
         <qcloud.cos.version>5.6.3</qcloud.cos.version>
         <fastdfs.version>1.27.2</fastdfs.version>
         <minio.version>8.2.2</minio.version>
-
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
