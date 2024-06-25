@@ -101,7 +101,7 @@ public class ApplicationConfig {
             corsConfiguration.addAllowedOrigin("*");
             corsConfiguration.addAllowedHeader("*");
             corsConfiguration.addAllowedMethod("*");
-//            corsConfiguration.setAllowCredentials(true);
+            corsConfiguration.setAllowCredentials(true);
             source.registerCorsConfiguration("/**", corsConfiguration);
         }
         return new CorsFilter(source);
