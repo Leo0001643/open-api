@@ -23,7 +23,7 @@ public class PlatformConfig {
     /**
      * 文件预览
      */
-    public static String PREVIEW = "/preview/**";
+    public static String UPLOAD = "/upload/**";
 
     /**
      * 图标

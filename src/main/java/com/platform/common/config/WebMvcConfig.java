@@ -45,7 +45,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         // favicon.ico
         registry.addResourceHandler(PlatformConfig.FAVICON).addResourceLocations("classpath:/static/");
         // file
-        registry.addResourceHandler(PlatformConfig.PREVIEW).addResourceLocations("file:" + rootPath + FileNameUtil.UNIX_SEPARATOR);
+        registry.addResourceHandler(PlatformConfig.UPLOAD).addResourceLocations("file:" + rootPath + FileNameUtil.UNIX_SEPARATOR);
     }
 
     /**
@@ -55,10 +55,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(versionInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns(PlatformConfig.FAVICON, PlatformConfig.PREVIEW);
+                .excludePathPatterns(PlatformConfig.FAVICON, PlatformConfig.UPLOAD);
         registry.addInterceptor(deviceInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns(PlatformConfig.FAVICON, PlatformConfig.PREVIEW);
+                .excludePathPatterns(PlatformConfig.FAVICON, PlatformConfig.UPLOAD);
     }
-
 }
