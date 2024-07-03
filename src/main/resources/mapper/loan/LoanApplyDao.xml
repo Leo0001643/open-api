@@ -8,7 +8,7 @@
     </sql>
 
     <!-- 查询列表字段 -->
-    <select id="queryList" resultType="com.platform.modules.loan.domain.LoanApply">
+    <select id="queryList" resultType="com.platform.modules.loan.domain.ChatLoanApply">
         <include refid="baseSql"/>
         <where>
             <if test="chatId != null">

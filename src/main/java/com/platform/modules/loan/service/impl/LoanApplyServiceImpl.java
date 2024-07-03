@@ -6,7 +6,7 @@ import com.platform.modules.chat.dao.ChatUserDao;
 import com.platform.modules.chat.domain.ChatUser;
 import com.platform.modules.chat.vo.LoanApplyVo;
 import com.platform.modules.loan.dao.LoanApplyDao;
-import com.platform.modules.loan.domain.LoanApply;
+import com.platform.modules.loan.domain.ChatLoanApply;
 import com.platform.modules.loan.service.LoanApplyService;
 import com.platform.modules.loan.utils.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service("loanApplyService")
-public class LoanApplyServiceImpl extends BaseServiceImpl<LoanApply> implements LoanApplyService {
+public class LoanApplyServiceImpl extends BaseServiceImpl<ChatLoanApply> implements LoanApplyService {
 
     @Resource
     private LoanApplyDao loanApplyDao;
@@ -27,11 +27,12 @@ public class LoanApplyServiceImpl extends BaseServiceImpl<LoanApply> implements 
 
     @Override
     public void loanApply(LoanApplyVo loanApplyVo) {
-        LoanApply loanApply = new LoanApply();
-        BeanUtils.copyProperties(loanApplyVo, loanApply);
-        loanApply.setBillno(StringUtils.getBillno());
-        loanApply.setCreateTime(new Date());
-        loanApply.setUsername(loanApplyVo.getChatId());
+        ChatLoanApply chatLoanApply = new ChatLoanApply();
+        BeanUtils.copyProperties(loanApplyVo, chatLoanApply);
+        chatLoanApply.setBillno(StringUtils.getBillno());
+        chatLoanApply.setCreateTime(new Date());
+        chatLoanApply.setUsername(loanApplyVo.getChatId());
+        chatLoanApply.setUpdate_time(new Date());
         String chatId = loanApplyVo.getChatId();
 
         QueryWrapper<ChatUser> wrapper = new QueryWrapper();
@@ -39,20 +40,20 @@ public class LoanApplyServiceImpl extends BaseServiceImpl<LoanApply> implements 
 
         ChatUser chatUser = chatUserDao.selectOne(wrapper);
         Optional.ofNullable(chatUser).orElseThrow(()->new BaseException("非法申请！"));
-        loanApplyDao.insert(loanApply);
+        loanApplyDao.insert(chatLoanApply);
     }
 
     @Override
-    public List<LoanApply> list(LoanApplyVo loanApplyVo) {
-        LoanApply loanApply = new LoanApply();
-        BeanUtils.copyProperties(loanApplyVo, loanApply);
-        return loanApplyDao.queryList(loanApply);
+    public List<ChatLoanApply> list(LoanApplyVo loanApplyVo) {
+        ChatLoanApply chatLoanApply = new ChatLoanApply();
+        BeanUtils.copyProperties(loanApplyVo, chatLoanApply);
+        return loanApplyDao.queryList(chatLoanApply);
     }
 
     @Override
-    public LoanApply getInfo(String billno) {
-        LoanApply loanApply = new LoanApply();
-        loanApply.setBillno(billno);
-        return this.queryOne(loanApply);
+    public ChatLoanApply getInfo(String billno) {
+        ChatLoanApply chatLoanApply = new ChatLoanApply();
+        chatLoanApply.setBillno(billno);
+        return this.queryOne(chatLoanApply);
     }
 }

@@ -1,7 +1,7 @@
 package com.platform.modules.loan.dao;
 
 import com.platform.common.web.dao.BaseDao;
-import com.platform.modules.loan.domain.LoanApply;
+import com.platform.modules.loan.domain.ChatLoanApply;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,11 +13,11 @@ import java.util.List;
  * </p>
  */
 @Repository
-public interface LoanApplyDao extends BaseDao<LoanApply> {
+public interface LoanApplyDao extends BaseDao<ChatLoanApply> {
 
     /**
      * 查询列表
      */
-    List<LoanApply> queryList(LoanApply loanApply);
+    List<ChatLoanApply> queryList(ChatLoanApply chatLoanApply);
 
 }

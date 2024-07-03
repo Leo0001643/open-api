@@ -190,8 +190,7 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
                 .setToId(friendId)
                 .setMsgId(chatMsg.getId());
         ChatVo04 chatVo04 = null;
-        if (PushMsgEnum.TRTC_VOICE_START.equals(msgType)
-                || PushMsgEnum.TRTC_VIDEO_START.equals(msgType)) {
+        if (PushMsgEnum.TRTC_VOICE_START.equals(msgType) || PushMsgEnum.TRTC_VIDEO_START.equals(msgType)) {
             chatVo04 = new ChatVo04()
                     .setUserId(friendId)
                     .setTrtcId(AppConstants.REDIS_TRTC_USER + friendId)

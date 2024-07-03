@@ -6,19 +6,6 @@ import java.math.BigDecimal;
 @Data
 public class LoanApplyVo {
 
-//            `chat_id` bigint DEFAULT NULL COMMENT '账号ID',
-//            `billno` bigint DEFAULT NULL COMMENT '申请单号',
-//            `username` varchar(20) DEFAULT NULL COMMENT '会员名',
-//            `realname` varchar(10) DEFAULT NULL COMMENT '真实姓名',
-//            `phone` varchar(13) DEFAULT NULL COMMENT '手机号',
-//            `identity_id` varchar(60) DEFAULT NULL COMMENT '身份证号',
-//            `home_address` varchar(60) DEFAULT NULL COMMENT '家庭住址',
-//            `home_revenue` decimal(11,2) DEFAULT NULL COMMENT '家庭月收入',
-//            `loan_amount` decimal(11,2) DEFAULT NULL COMMENT '贷款金额',
-//            `reason` varchar(200) DEFAULT NULL COMMENT '理由',
-//            `create_time` datetime DEFAULT NULL COMMENT '申请时间',
-
-
     @NotNull(message = "账号不能为空")
     private String chatId;
 
