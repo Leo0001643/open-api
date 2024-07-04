@@ -83,7 +83,7 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
             throw new BaseException(msg);
         }
         String salt = RandomUtil.randomString(4);
-        String chatNo = IdUtil.simpleUUID();
+        String chatNo = RandomUtil.randomString(16);
         ChatUser cu = new ChatUser()
                 .setNickName(nickName)
                 .setChatNo(chatNo)
