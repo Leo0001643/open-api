@@ -17,6 +17,7 @@ import com.platform.common.constant.AppConstants;
 import com.platform.common.enums.YesOrNoEnum;
 import com.platform.common.exception.BaseException;
 import com.platform.common.shiro.ShiroUtils;
+import com.platform.common.utils.IdUtils;
 import com.platform.common.web.service.impl.BaseServiceImpl;
 import com.platform.modules.chat.dao.ChatGroupDao;
 import com.platform.modules.chat.domain.*;
@@ -90,7 +91,9 @@ public class ChatGroupServiceImpl extends BaseServiceImpl<ChatGroup> implements 
         Date now = DateUtil.date();
         // 建群
         String portrait = "https://img.alicdn.com/imgextra/i3/87413133/O1CN01mHA9DJ1Z0xlORnKuW_!!87413133.png";
+
         ChatGroup group = new ChatGroup()
+                .setId(IdUtils.getRandomId())
                 .setMaster(master.getUserId())
                 .setName(StrUtil.format(AppConstants.GROUP_CREATE_NAME, master.getNickName(), RandomUtil.randomString(4)))
                 .setPortrait(JSONUtil.toJsonStr(new JSONArray().put(portrait)))
