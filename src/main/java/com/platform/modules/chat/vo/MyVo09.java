@@ -27,7 +27,7 @@ public class MyVo09 {
     /**
      * 性别1男0女
      */
-    private GenderEnum gender;
+    private String gender;
     /**
      * 手机号
      */
@@ -59,7 +59,7 @@ public class MyVo09 {
         if (gender == null) {
             return null;
         }
-        return gender.getInfo();
+        return gender;
     }
 
 }

@@ -27,13 +27,12 @@ public class ChatUser extends BaseEntity {
     /**
      * 会员ID
      */
-    @TableId
     private Integer id;
 
     /**
      * 主键
      */
-
+    @TableId
     private Long userId;
     /**
      * 手机号

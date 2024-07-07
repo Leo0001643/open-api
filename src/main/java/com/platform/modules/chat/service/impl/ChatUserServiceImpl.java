@@ -195,7 +195,7 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
         this.updateById(cu);
     }
 
-    @Transactional
+//    @Transactional
     @Override
     public MyVo09 doLogin(AuthenticationToken authenticationToken) {
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
@@ -223,13 +223,21 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
             address = ipZone.getMainInfo().concat(ipZone.getSubInfo());
         } catch (Exception e) {}
         Long userId = ShiroUtils.getUserId();
+
         ChatUser chatUserDb = this.getById(userId);
+        if(chatUserDb.getStatus() == 2){
+            tokenService.deleteToken(chatUserDb.getToken());
+            ChatUser chatUser = new ChatUser().setUserId(userId).setToken(null).setLoginStatus(2);
+            this.updateById(chatUser);
+            throw new BaseException("您的账号已被停用，请联系客服！");
+        }
         tokenService.deleteToken(chatUserDb.getToken());
         // 生成新TOKEN
         String token = tokenService.generateToken();
         String version = ServletUtils.getRequest().getHeader(HeadConstant.VERSION);
         ChatUser chatUser = new ChatUser().setUserId(userId).setToken(token).setVersion(version);
         chatUser.setLoginRegion(address);
+        chatUser.setLoginStatus(1);
         chatUser.setLoginIp(ip);
         chatUser.setDevice(DeviceUtils.detectDevice(request));
         this.updateById(chatUser);
