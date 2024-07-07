@@ -74,11 +74,6 @@ public class ChatUser extends BaseEntity {
     private String gender;
 
     /**
-     * 性别描述
-     */
-    private String genderName;
-
-    /**
      * 头像
      */
     private String portrait;
