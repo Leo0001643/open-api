@@ -11,6 +11,7 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.github.pagehelper.PageHelper;
 import com.platform.common.constant.AppConstants;
@@ -148,8 +149,11 @@ public class ChatGroupServiceImpl extends BaseServiceImpl<ChatGroup> implements 
         ChatGroupInfo info = groupInfoService.getGroupInfo(groupId, userId, YesOrNoEnum.YES);
         // 组装返回值
         Dict groupDict = Dict.create().parseBean(group)
-                .filter("name", "notice", "portrait")
-                .set("groupId", group.getId());
+                .filter("name", "notice").set("groupId", group.getId());
+        if(!StringUtils.isEmpty(group.getPortrait())){
+            groupDict.set("portrait", new JSONArray(group.getPortrait()));
+        }
+
         Dict set = Dict.create().parseBean(info)
                 .filter("top", "disturb", "keepGroup");
         List<Long> userList = groupInfoService.queryUserList(groupId);
