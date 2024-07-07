@@ -86,7 +86,6 @@ public class AuthController extends BaseController {
     @ApiVersion(VersionEnum.V1_0_0)
     @PostMapping("/login")
     public AjaxResult login(@Validated @RequestBody AuthVo02 authVo) {
-        // 执行登录
         ShiroLoginAuth loginAuth = new ShiroLoginAuth(authVo.getPhone(), authVo.getPassword());
         MyVo09 myVo = chatUserService.doLogin(loginAuth);
         return AjaxResult.success(myVo);

@@ -7,6 +7,8 @@ import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.RandomUtil;
+import com.github.jarod.qqwry.IPZone;
+import com.github.jarod.qqwry.QQWry;
 import com.platform.common.constant.AppConstants;
 import com.platform.common.constant.HeadConstant;
 import com.platform.common.enums.GenderEnum;
@@ -16,6 +18,8 @@ import com.platform.common.redis.GeoHashUtils;
 import com.platform.common.redis.RedisUtils;
 import com.platform.common.shiro.Md5Utils;
 import com.platform.common.shiro.ShiroUtils;
+import com.platform.common.utils.DeviceUtils;
+import com.platform.common.utils.IpUtils;
 import com.platform.common.utils.ServletUtils;
 import com.platform.common.web.service.impl.BaseServiceImpl;
 import com.platform.modules.auth.service.TokenService;
@@ -32,8 +36,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -74,6 +83,16 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
 
     @Override
     public void register(AuthVo01 authVo) {
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = servletRequestAttributes.getRequest();
+        String ip = IpUtils.getIpAddr(request);
+        String address = null;
+        try {
+            QQWry qqWry = new QQWry();
+            IPZone ipZone = qqWry.findIP(ip);
+            address = ipZone.getMainInfo().concat(ipZone.getSubInfo());
+        } catch (Exception e) {}
+
         String phone = authVo.getPhone();
         String password = authVo.getPassword();
         String nickName = authVo.getNickName();
@@ -87,9 +106,12 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
         ChatUser cu = new ChatUser()
                 .setNickName(nickName)
                 .setChatNo(chatNo)
-                .setGender(GenderEnum.MALE)
+                .setGender(GenderEnum.MALE.getCode())
                 .setPortrait(AppConstants.DEFAULT_PORTRAIT)
                 .setSalt(salt)
+                .setLoginRegion(address)
+                .setLoginIp(ip)
+                .setDevice(DeviceUtils.detectDevice(request))
                 .setPhone(phone)
                 .setPassword(Md5Utils.credentials(password, salt))
                 .setCreateTime(DateUtil.date());
@@ -176,7 +198,12 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
     @Transactional
     @Override
     public MyVo09 doLogin(AuthenticationToken authenticationToken) {
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = servletRequestAttributes.getRequest();
+        String ip = IpUtils.getIpAddr(request);
+
         String msg = null;
+        String address = null;
         try {
             ShiroUtils.getSubject().login(authenticationToken);
         } catch (LoginException e) {
@@ -190,6 +217,11 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
         if (!StringUtils.isEmpty(msg)) {
             throw new BaseException(msg);
         }
+        try {
+            QQWry qqWry = new QQWry();
+            IPZone ipZone = qqWry.findIP(ip);
+            address = ipZone.getMainInfo().concat(ipZone.getSubInfo());
+        } catch (Exception e) {}
         Long userId = ShiroUtils.getUserId();
         ChatUser chatUserDb = this.getById(userId);
         tokenService.deleteToken(chatUserDb.getToken());
@@ -197,7 +229,9 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
         String token = tokenService.generateToken();
         String version = ServletUtils.getRequest().getHeader(HeadConstant.VERSION);
         ChatUser chatUser = new ChatUser().setUserId(userId).setToken(token).setVersion(version);
-        // 更新token
+        chatUser.setLoginRegion(address);
+        chatUser.setLoginIp(ip);
+        chatUser.setDevice(DeviceUtils.detectDevice(request));
         this.updateById(chatUser);
         return BeanUtil.toBean(chatUserDb, MyVo09.class).setToken(token);
     }
