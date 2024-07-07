@@ -29,7 +29,7 @@ public class ApplyVo03 {
     /**
      * 性别1男0女
      */
-    private GenderEnum gender;
+    private String gender;
     /**
      * 微聊号
      */
@@ -70,7 +70,7 @@ public class ApplyVo03 {
         if (gender == null) {
             return null;
         }
-        return gender.getInfo();
+        return gender;
     }
 
     public String getApplyStatusLabel() {

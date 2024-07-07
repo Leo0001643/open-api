@@ -9,6 +9,6 @@ import javax.validation.constraints.NotNull;
 public class MyVo05 {
 
     @NotNull(message = "性别不能为空")
-    private GenderEnum gender;
+    private String gender;
 
 }

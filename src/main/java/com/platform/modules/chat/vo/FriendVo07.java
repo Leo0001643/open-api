@@ -29,7 +29,7 @@ public class FriendVo07 {
     /**
      * 性别1男0女
      */
-    private GenderEnum gender;
+    private String gender;
     /**
      * 封面
      */
@@ -71,7 +71,7 @@ public class FriendVo07 {
         if (gender == null) {
             return null;
         }
-        return gender.getInfo();
+        return gender;
     }
 
     public String getSourceLabel() {

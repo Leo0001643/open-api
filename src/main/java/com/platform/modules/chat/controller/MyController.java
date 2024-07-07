@@ -104,7 +104,7 @@ public class MyController extends BaseController {
         // 执行修改
         ChatUser chatUser = new ChatUser()
                 .setUserId(ShiroUtils.getUserId())
-                .setGender(myVo.getGender().getCode());
+                .setGender(myVo.getGender());
         chatUserService.updateById(chatUser);
         return AjaxResult.successMsg("修改成功");
     }
