@@ -27,7 +27,7 @@ public class NearVo02 {
     /**
      * 性别1男0女
      */
-    private GenderEnum gender;
+    private String gender;
     /**
      * 距离
      */
@@ -41,7 +41,7 @@ public class NearVo02 {
         if (gender == null) {
             return null;
         }
-        return gender.getInfo();
+        return gender;
     }
 
 }

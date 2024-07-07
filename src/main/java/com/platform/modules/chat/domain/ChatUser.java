@@ -71,7 +71,7 @@ public class ChatUser extends BaseEntity {
     /**
      * 性别：1男 2女 3未知
      */
-    private GenderEnum gender;
+    private String gender;
 
     /**
      * 性别描述
@@ -211,7 +211,7 @@ public class ChatUser extends BaseEntity {
             return user;
         }
         return new ChatUser()
-                .setGender(GenderEnum.MALE)
+                .setGender(GenderEnum.MALE.getCode())
                 .setLoginCount(1)
                 .setLoginTime(new Date())
                 .setStatus(1)

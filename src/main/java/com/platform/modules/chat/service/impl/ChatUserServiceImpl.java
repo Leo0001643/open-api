@@ -106,7 +106,7 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
         ChatUser cu = new ChatUser()
                 .setNickName(nickName)
                 .setChatNo(chatNo)
-                .setGender(GenderEnum.MALE)
+                .setGender(GenderEnum.MALE.getCode())
                 .setPortrait(AppConstants.DEFAULT_PORTRAIT)
                 .setSalt(salt)
                 .setLoginRegion(address)

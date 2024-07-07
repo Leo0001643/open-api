@@ -13,22 +13,22 @@ public enum GenderEnum {
     /**
      * 未知
      */
-    UNKNOWN(3, "未知"),
+    UNKNOWN("3", "未知"),
     /**
      * 男
      */
-    MALE(1, "男"),
+    MALE("1", "男"),
     /**
      * 女
      */
-    FEMALE(2, "女");
+    FEMALE("2", "女");
 
     @EnumValue
     @JsonValue
-    private final Integer code;
+    private final String code;
     private final String info;
 
-    GenderEnum(Integer code, String info) {
+    GenderEnum(String code, String info) {
         this.code = code;
         this.info = info;
     }
