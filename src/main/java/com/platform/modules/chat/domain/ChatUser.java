@@ -89,11 +89,6 @@ public class ChatUser extends BaseEntity {
     private String cover;
 
     /**
-     * 封面
-     */
-    private String coverUrl;
-
-    /**
      * 省份
      */
     private String provinces;
@@ -114,19 +109,9 @@ public class ChatUser extends BaseEntity {
     private Integer source;
 
     /**
-     * 用户来源描述
-     */
-    private String sourceName;
-
-    /**
      * 设备类型：1苹果 2安卓 3WAP站 4PC站 5微信小程序 6后台添加
      */
     private Integer device;
-
-    /**
-     * 设备类型描述
-     */
-    private String deviceName;
 
     /**
      * 用户状态：1登录 2登出
@@ -134,19 +119,9 @@ public class ChatUser extends BaseEntity {
     private Integer loginStatus;
 
     /**
-     * 用户状态描述
-     */
-    private String loginStatusName;
-
-    /**
      * 是否启用：1启用  2停用
      */
     private Integer status;
-
-    /**
-     * 是否启用描述
-     */
-    private String statusName;
 
     /**
      * 我的推广码
