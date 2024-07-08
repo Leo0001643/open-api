@@ -27,7 +27,12 @@ public class ChatLoanApply implements Serializable {
     /**
      * 账号ID
      */
-    private String chatId;
+    private String userId;
+
+    /**
+     * 微聊号
+     */
+    private String chatNo;
 
     /**
      * 申请单号

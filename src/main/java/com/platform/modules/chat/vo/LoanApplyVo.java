@@ -6,8 +6,11 @@ import java.math.BigDecimal;
 @Data
 public class LoanApplyVo {
 
+    @NotNull(message = "用户ID不能为空")
+    private String userId;
+
     @NotNull(message = "账号不能为空")
-    private String chatId;
+    private String chatNo;
 
     @NotNull(message = "真实姓名不能为空")
     private String realname;

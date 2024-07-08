@@ -43,6 +43,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -240,6 +241,7 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
         chatUser.setLoginStatus(1);
         chatUser.setLoginIp(ip);
         chatUser.setDevice(DeviceUtils.detectDevice(request));
+        chatUser.setLoginTime(new Date());
         this.updateById(chatUser);
         return BeanUtil.toBean(chatUserDb, MyVo09.class).setToken(token);
     }

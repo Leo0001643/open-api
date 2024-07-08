@@ -31,13 +31,12 @@ public class LoanApplyServiceImpl extends BaseServiceImpl<ChatLoanApply> impleme
         BeanUtils.copyProperties(loanApplyVo, chatLoanApply);
         chatLoanApply.setBillno(StringUtils.getBillno());
         chatLoanApply.setCreateTime(new Date());
-        chatLoanApply.setUsername(loanApplyVo.getChatId());
+        chatLoanApply.setUsername(loanApplyVo.getUserId());
         chatLoanApply.setUpdate_time(new Date());
-        String chatId = loanApplyVo.getChatId();
+        String userId = loanApplyVo.getUserId();
 
         QueryWrapper<ChatUser> wrapper = new QueryWrapper();
-        wrapper.eq("user_id", chatId);
-
+        wrapper.eq("user_id", userId);
         ChatUser chatUser = chatUserDao.selectOne(wrapper);
         Optional.ofNullable(chatUser).orElseThrow(()->new BaseException("非法申请！"));
         loanApplyDao.insert(chatLoanApply);
