@@ -106,6 +106,7 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
         String chatNo = RandomUtil.randomString(16);
         ChatUser cu = new ChatUser()
                 .setNickName(nickName)
+                .setUsername(phone)
                 .setChatNo(chatNo)
                 .setGender(GenderEnum.MALE.getCode())
                 .setPortrait(AppConstants.DEFAULT_PORTRAIT)
