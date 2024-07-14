@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 
 /**
  * 基础上传
@@ -125,6 +126,31 @@ public class UploadBaseService {
         return fileType;
     }
 
+
+    /**
+     * 获取文件大小
+     */
+    protected static String getFileSize(MultipartFile file) {
+        long fileS = file.getSize();
+        DecimalFormat df = new DecimalFormat("#.00");
+        String fileSizeString = "";
+        String wrongSize = "0B";
+        if (fileS == 0) {
+            return wrongSize;
+        }
+        if (fileS < 1024) {
+            fileSizeString = df.format((double) fileS) + "B";
+        } else if (fileS < 1048576) {
+            fileSizeString = df.format((double) fileS / 1024) + "KB";
+        } else if (fileS < 1073741824) {
+            fileSizeString = df.format((double) fileS / 1048576) + "MB";
+        } else {
+            fileSizeString = df.format((double) fileS / 1073741824) + "GB";
+        }
+        return fileSizeString;
+    }
+
+
     /**
      * 获取文件流
      */
@@ -147,9 +173,10 @@ public class UploadBaseService {
     /**
      * 封装对象
      */
-    protected static UploadFileVo format(String fileName, String serverUrl, String fileKey, String fileType) {
+    protected static UploadFileVo format(String fileName, String serverUrl, String fileKey, String fileType, String fileSize) {
         // 服务器地址
         UploadFileVo fileVo = new UploadFileVo()
+                .setFileSize(fileSize)
                 .setFileName(fileName)
                 .setFullPath(serverUrl + FileNameUtil.UNIX_SEPARATOR + fileKey)
                 .setFileType(fileType);

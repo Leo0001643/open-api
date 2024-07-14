@@ -102,6 +102,7 @@ public class UploadCosServiceImpl extends UploadBaseService implements UploadSer
         String fileName = getFileName(file);
         String fileKey = getFileKey(file, folder);
         String fileType = getFileType(file);
+        String fileSize = getFileSize(file);
         // 3 生成 cos 客户端。
         COSClient client = null;
         try {
@@ -110,7 +111,7 @@ public class UploadCosServiceImpl extends UploadBaseService implements UploadSer
             PutObjectRequest putObjectRequest = new PutObjectRequest(uploadConfig.getBucket()
                     , fileKey, file.getInputStream(), new ObjectMetadata());
             client.putObject(putObjectRequest);
-            return format(fileName, uploadConfig.getServerUrl(), fileKey, fileType);
+            return format(fileName, uploadConfig.getServerUrl(), fileKey, fileType, fileSize);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException("文件上传失败");
@@ -131,6 +132,7 @@ public class UploadCosServiceImpl extends UploadBaseService implements UploadSer
         String fileName = getFileName(file);
         String fileKey = getFileKey(file, folder);
         String fileType = getFileType(file);
+        String fileSize = getFileSize((MultipartFile) file);
         InputStream inputStream = FileUtil.getInputStream(file);
         // 3 生成 cos 客户端。
         COSClient client = null;
@@ -140,7 +142,7 @@ public class UploadCosServiceImpl extends UploadBaseService implements UploadSer
             PutObjectRequest putObjectRequest = new PutObjectRequest(uploadConfig.getBucket()
                     , fileKey, inputStream, new ObjectMetadata());
             client.putObject(putObjectRequest);
-            return format(fileName, uploadConfig.getServerUrl(), fileKey, fileType);
+            return format(fileName, uploadConfig.getServerUrl(), fileKey, fileType, fileSize);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException("文件上传失败");

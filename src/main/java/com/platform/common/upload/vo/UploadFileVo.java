@@ -15,6 +15,10 @@ public class UploadFileVo {
      */
     private String fileName;
     /**
+     * 文件大小
+     */
+    private String fileSize;
+    /**
      * 文件地址
      */
     private String fullPath;

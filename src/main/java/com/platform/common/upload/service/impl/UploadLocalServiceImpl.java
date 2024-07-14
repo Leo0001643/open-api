@@ -50,6 +50,8 @@ public class UploadLocalServiceImpl extends UploadBaseService implements UploadS
         String uploadPath = uploadConfig.getRegion();
         String fileName = getFileName(file);
         String fileType = getFileType(file);
+        String fileSize = getFileSize(file);
+
         // 文件路径
         String fileKey = getFileKey(uploadPath, fileType);
         try {
@@ -60,7 +62,7 @@ public class UploadLocalServiceImpl extends UploadBaseService implements UploadS
             throw new RuntimeException("文件上传失败");
         }
         // 组装对象
-        UploadFileVo fileVo = format(fileName, serverUrl, fileKey, fileType)
+        UploadFileVo fileVo = format(fileName, serverUrl, fileKey, fileType, fileSize)
                 .setFullPath(serverUrl + fileKey);
         return fileVo;
     }
@@ -76,12 +78,13 @@ public class UploadLocalServiceImpl extends UploadBaseService implements UploadS
         String uploadPath = uploadConfig.getRegion();
         String fileName = getFileName(file);
         String fileType = getFileType(file);
+        String fileSize = getFileSize((MultipartFile) file);
         // 文件路径
         String fileKey = getFileKey(uploadPath, fileType);
         // 文件拷贝
         FileUtil.copyFile(file, new File(uploadPath + FileNameUtil.UNIX_SEPARATOR + fileKey));
         // 组装对象
-        UploadFileVo fileVo = format(fileName, serverUrl, fileKey, fileType)
+        UploadFileVo fileVo = format(fileName, serverUrl, fileKey, fileType,fileSize)
                 .setFullPath(serverUrl + fileKey);
         return fileVo;
     }

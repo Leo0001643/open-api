@@ -64,8 +64,9 @@ public class UploadFastServiceImpl extends UploadBaseService implements UploadSe
         String fileKey = storePath.getFullPath();
         String fileName = getFileName(file);
         String fileType = getFileType(file);
+        String fileSize = getFileSize(file);
         String serverUrl = uploadConfig.getServerUrl();
-        return format(fileName, serverUrl, fileKey, fileType);
+        return format(fileName, serverUrl, fileKey, fileType, fileSize);
     }
 
     @Override
@@ -85,8 +86,9 @@ public class UploadFastServiceImpl extends UploadBaseService implements UploadSe
         String fileKey = storePath.getFullPath();
         String fileType = getFileType(file);
         String fileName = getFileName(file);
+        String fileSize = getFileSize((MultipartFile) file);
         String serverUrl = uploadConfig.getServerUrl();
-        return format(fileName, serverUrl, fileKey, fileType);
+        return format(fileName, serverUrl, fileKey, fileType,fileSize);
     }
 
 }

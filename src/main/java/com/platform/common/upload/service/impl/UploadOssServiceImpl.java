@@ -86,10 +86,11 @@ public class UploadOssServiceImpl extends UploadBaseService implements UploadSer
             String fileName = getFileName(file);
             String fileKey = getFileKey(file, folder);
             String fileType = getFileType(file);
+            String fileSize = getFileSize(file);
             client.putObject(uploadConfig.getBucket(), fileKey, file.getInputStream());
             // 服务器地址
             String serverUrl = uploadConfig.getServerUrl();
-            return format(fileName, serverUrl, fileKey, fileType);
+            return format(fileName, serverUrl, fileKey, fileType, fileSize);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException("文件上传失败");
@@ -110,11 +111,12 @@ public class UploadOssServiceImpl extends UploadBaseService implements UploadSer
             String fileName = getFileName(file);
             String fileKey = getFileKey(file, folder);
             String fileType = getFileType(file);
+            String fileSize = getFileSize((MultipartFile) file);
             InputStream inputStream = FileUtil.getInputStream(file);
             client.putObject(uploadConfig.getBucket(), fileKey, inputStream);
             // 服务器地址
             String serverUrl = uploadConfig.getServerUrl();
-            return format(fileName, serverUrl, fileKey, fileType);
+            return format(fileName, serverUrl, fileKey, fileType, fileSize);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException("文件上传失败");

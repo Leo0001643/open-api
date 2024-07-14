@@ -68,6 +68,7 @@ public class UploadMinioServiceImpl extends UploadBaseService implements UploadS
         String fileName = getFileName(file);
         String fileType = getFileType(file);
         String fileKey = getFileKey(file);
+        String fileSize = getFileSize(file);
         try {
             PutObjectArgs args = PutObjectArgs.builder()
                     .bucket(uploadConfig.getBucket())
@@ -81,7 +82,7 @@ public class UploadMinioServiceImpl extends UploadBaseService implements UploadS
             throw new RuntimeException("文件上传失败");
         }
         // 组装对象
-        UploadFileVo fileVo = format(fileName, serverUrl, fileKey, fileType)
+        UploadFileVo fileVo = format(fileName, serverUrl, fileKey, fileType, fileSize)
                 .setFullPath(serverUrl + fileKey);
         return fileVo;
     }
@@ -98,6 +99,7 @@ public class UploadMinioServiceImpl extends UploadBaseService implements UploadS
         String fileName = getFileName(file);
         String fileType = getFileType(file);
         String fileKey = getFileKey(file);
+        String fileSize = getFileSize((MultipartFile) file);
         try {
             PutObjectArgs args = PutObjectArgs.builder()
                     .bucket(uploadConfig.getBucket())
@@ -111,7 +113,7 @@ public class UploadMinioServiceImpl extends UploadBaseService implements UploadS
             throw new RuntimeException("文件上传失败");
         }
         // 组装对象
-        UploadFileVo fileVo = format(fileName, serverUrl, fileKey, fileType)
+        UploadFileVo fileVo = format(fileName, serverUrl, fileKey, fileType, fileSize)
                 .setFullPath(serverUrl + fileKey);
         return fileVo;
     }

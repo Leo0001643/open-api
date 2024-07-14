@@ -84,12 +84,13 @@ public class UploadKodoServiceImpl extends UploadBaseService implements UploadSe
         String fileName = getFileName(file);
         String fileKey = getFileKey(file, folder);
         String fileType = getFileType(file);
+        String fileSize = getFileSize(file);
         String token = getUploadToken(fileKey);
         Response response = null;
         try {
             UploadManager uploadManager = new UploadManager(new com.qiniu.storage.Configuration());
             response = uploadManager.put(file.getInputStream(), fileKey, token, null, fileType);
-            return format(fileName, uploadConfig.getServerUrl(), fileKey, fileType);
+            return format(fileName, uploadConfig.getServerUrl(), fileKey, fileType, fileSize);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException("文件上传失败");
@@ -110,13 +111,14 @@ public class UploadKodoServiceImpl extends UploadBaseService implements UploadSe
         String fileName = getFileName(file);
         String fileKey = getFileKey(file, folder);
         String fileType = getFileType(file);
+        String fileSize = getFileSize((MultipartFile) file);
         String token = getUploadToken(fileKey);
         InputStream inputStream = FileUtil.getInputStream(file);
         Response response = null;
         try {
             UploadManager uploadManager = new UploadManager(new com.qiniu.storage.Configuration());
             response = uploadManager.put(inputStream, fileKey, token, null, fileType);
-            return format(fileName, uploadConfig.getServerUrl(), fileKey, fileType);
+            return format(fileName, uploadConfig.getServerUrl(), fileKey, fileType, fileSize);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RuntimeException("文件上传失败");
