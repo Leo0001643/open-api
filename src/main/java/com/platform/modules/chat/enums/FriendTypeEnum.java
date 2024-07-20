@@ -17,11 +17,11 @@ public enum FriendTypeEnum {
     /**
      * 天气机器人
      */
-    WEATHER("weather", "天气机器人"),
+    WEATHER("weather", "在线客服1"),
     /**
      * 翻译机器人
      */
-    TRANSLATION("translation", "翻译机器人"),
+    TRANSLATION("translation", "在线客服2"),
     /**
      * 自己
      */
