@@ -57,7 +57,7 @@ public class ChatTalkServiceImpl implements ChatTalkService {
                 .setUserId(weatherId)
                 .setChatNo(NumberUtil.toStr(weatherId))
                 .setNickName(weatherType.getInfo())
-                .setPortrait("http://q3z3-im.oss-cn-beijing.aliyuncs.com/0295f6edc9de43748c0d2f25b5057893.png")
+                .setPortrait("http://103.143.80.82:9699/upload/onlineService/onlineService1.png")
                 .setUserType(weatherType);
         // 翻译机器人
         Long translationId = 10003L;
@@ -66,7 +66,7 @@ public class ChatTalkServiceImpl implements ChatTalkService {
                 .setUserId(translationId)
                 .setChatNo(NumberUtil.toStr(translationId))
                 .setNickName(translationType.getInfo())
-                .setPortrait("http://q3z3-im.oss-cn-beijing.aliyuncs.com/18ac0b6aa3d147e6b1a65c2eb838707e.png")
+                .setPortrait("http://103.143.80.82:9699/upload/onlineService/onlineService2.png")
                 .setUserType(translationType);
         return CollUtil.newArrayList(weather, translation);
     }
