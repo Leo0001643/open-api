@@ -52,7 +52,7 @@ public class ChatTalkServiceImpl implements ChatTalkService {
     private static List<FriendVo06> friendList() {
         // 天气机器人
         Long weatherId = 10002L;
-        FriendTypeEnum weatherType = FriendTypeEnum.WEATHER;
+        FriendTypeEnum weatherType = FriendTypeEnum.NORMAL;
         FriendVo06 weather = new FriendVo06()
                 .setUserId(weatherId)
                 .setChatNo(NumberUtil.toStr(weatherId))
@@ -61,7 +61,7 @@ public class ChatTalkServiceImpl implements ChatTalkService {
                 .setUserType(weatherType);
         // 翻译机器人
         Long translationId = 10003L;
-        FriendTypeEnum translationType = FriendTypeEnum.TRANSLATION;
+        FriendTypeEnum translationType = FriendTypeEnum.NORMAL;
         FriendVo06 translation = new FriendVo06()
                 .setUserId(translationId)
                 .setChatNo(NumberUtil.toStr(translationId))

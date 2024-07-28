@@ -122,8 +122,7 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
             chatPushService.pushMsg(paramVo.setToId(userId).setMsgId(IdWorker.getId()), PushMsgEnum.TEXT);
         }, 2, TimeUnit.SECONDS);
         // 返回结果
-        return doResult(MsgStatusEnum.NORMAL)
-                .setMsgId(chatMsg.getId());
+        return doResult(MsgStatusEnum.NORMAL).setMsgId(chatMsg.getId());
     }
 
     /**
