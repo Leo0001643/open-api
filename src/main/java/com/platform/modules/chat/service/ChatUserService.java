@@ -1,6 +1,4 @@
 package com.platform.modules.chat.service;
-
-import cn.hutool.core.lang.Dict;
 import com.platform.common.web.service.BaseService;
 import com.platform.modules.auth.vo.AuthVo01;
 import com.platform.modules.chat.domain.ChatUser;
