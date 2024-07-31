@@ -21,5 +21,5 @@ public class ChatVo01 {
     private String content;
 
     //引用消息ID
-    private String ReferencesId;
+    private Long refMsgId;
 }

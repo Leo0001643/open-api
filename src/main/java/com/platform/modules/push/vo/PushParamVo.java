@@ -57,4 +57,9 @@ public class PushParamVo {
      */
     private Long toId;
 
+    /**
+     * 引用消息
+     */
+    private RefMsgVo refMsg;
+
 }

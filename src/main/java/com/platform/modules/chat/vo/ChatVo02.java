@@ -19,4 +19,7 @@ public class ChatVo02 {
     @NotBlank(message = "消息内容不能为空")
     @Size(max = 20000, message = "消息内容长度不能大于20000")
     private String content;
+
+    //引用消息ID
+    private Long refMsgId;
 }

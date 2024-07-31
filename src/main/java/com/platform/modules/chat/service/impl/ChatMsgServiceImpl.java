@@ -20,9 +20,11 @@ import com.platform.modules.push.enums.PushMsgEnum;
 import com.platform.modules.push.enums.PushTalkEnum;
 import com.platform.modules.push.service.ChatPushService;
 import com.platform.modules.push.vo.PushParamVo;
+import com.platform.modules.push.vo.RefMsgVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -160,6 +162,9 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         Long friendId = chatVo.getUserId();
         String content = chatVo.getContent();
         PushMsgEnum msgType = chatVo.getMsgType();
+        Long refmsgId = chatVo.getRefMsgId();
+
+
         // 校验好友
         ChatFriend friend1 = friendService.getFriend(userId, friendId);
         if (friend1 == null) {
@@ -179,6 +184,13 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         if (toUser == null) {
             return doResult(MsgStatusEnum.FRIEND_DELETED);
         }
+        RefMsgVo refMsgVo = new RefMsgVo();
+        if(refmsgId != null){
+            ChatMsg refChatMsg = chatMsgDao.selectById(refmsgId);
+            refMsgVo.setMsgType(refChatMsg.getMsgType());
+            refMsgVo.setMsgId(refChatMsg.getId());
+            refMsgVo.setContent(refChatMsg.getContent());
+        }
         // 保存消息
         ChatMsg chatMsg = this.saveMsg(chatVo);
 
@@ -188,7 +200,8 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
                 .setTop(friend2.getTop())
                 .setContent(content)
                 .setToId(friendId)
-                .setMsgId(chatMsg.getId());
+                .setMsgId(chatMsg.getId())
+                .setRefMsg(refMsgVo);
 
         ChatVo04 chatVo04 = null;
         if (PushMsgEnum.TRTC_VOICE_START.equals(msgType) || PushMsgEnum.TRTC_VIDEO_START.equals(msgType)) {
@@ -218,6 +231,8 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         String content = chatVo.getContent();
         Long fromId = ShiroUtils.getUserId();
         Long groupId = chatVo.getGroupId();
+        Long refMsgId = chatVo.getRefMsgId();
+
         // 查询群组
         ChatGroup group = groupService.getById(groupId);
         if (group == null) {
@@ -228,6 +243,15 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         if (groupInfo == null) {
             return doResult(MsgStatusEnum.GROUP_INFO_NOT_EXIST);
         }
+        //查询引用消息
+        RefMsgVo refMsgVo = new RefMsgVo();
+        if(refMsgId != null){
+            ChatMsg refChatMsg = chatMsgDao.selectById(refMsgId);
+            refMsgVo.setMsgType(refChatMsg.getMsgType());
+            refMsgVo.setContent(refChatMsg.getContent());
+            refMsgVo.setMsgId(refChatMsg.getId());
+        }
+
         // 保存数据
         ChatMsg chatMsg = new ChatMsg()
                 .setFromId(fromId)
@@ -243,6 +267,7 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         PushParamVo groupUser = new PushParamVo()
                 .setUserId(group.getId())
                 .setNickName(group.getName())
+                .setRefMsg(refMsgVo)
                 .setPortrait(group.getPortrait());
         // 推送
         chatPushService.pushGroupMsg(userList, groupUser, chatVo.getMsgType());

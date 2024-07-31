@@ -84,8 +84,7 @@ public class UploadLocalServiceImpl extends UploadBaseService implements UploadS
         // 文件拷贝
         FileUtil.copyFile(file, new File(uploadPath + FileNameUtil.UNIX_SEPARATOR + fileKey));
         // 组装对象
-        UploadFileVo fileVo = format(fileName, serverUrl, fileKey, fileType,fileSize)
-                .setFullPath(serverUrl + fileKey);
+        UploadFileVo fileVo = format(fileName, serverUrl, fileKey, fileType,fileSize).setFullPath(serverUrl + fileKey);
         return fileVo;
     }
 
