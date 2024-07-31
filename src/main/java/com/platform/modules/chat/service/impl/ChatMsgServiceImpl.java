@@ -181,6 +181,7 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         }
         // 保存消息
         ChatMsg chatMsg = this.saveMsg(chatVo);
+
         // 组装推送
         PushParamVo paramVo = ChatUser.initParam(chatUserService.getById(userId))
                 .setNickName(friend2.getRemark())
@@ -188,6 +189,7 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
                 .setContent(content)
                 .setToId(friendId)
                 .setMsgId(chatMsg.getId());
+
         ChatVo04 chatVo04 = null;
         if (PushMsgEnum.TRTC_VOICE_START.equals(msgType) || PushMsgEnum.TRTC_VIDEO_START.equals(msgType)) {
             chatVo04 = new ChatVo04()
