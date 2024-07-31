@@ -30,4 +30,9 @@ public class PushFromVo {
      */
     private String userType;
 
+    /**
+     * 引用消息
+     */
+    private RefMsgVo refMsgVo;
+
 }

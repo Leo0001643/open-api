@@ -41,6 +41,11 @@ public class PushBodyVo {
     private PushFromVo fromInfo;
 
     /**
+     * 引用消息数据
+     */
+    private RefMsgVo refMsg;
+
+    /**
      * 接收人数据
      */
     private PushToVo groupInfo;
@@ -51,6 +56,7 @@ public class PushBodyVo {
         this.msgContent = data;
         this.createTime = DateUtil.format(DateUtil.date(), DatePattern.NORM_DATETIME_FORMAT);
         this.groupInfo = new PushToVo();
+        this.refMsg = new RefMsgVo();
     }
 
 }

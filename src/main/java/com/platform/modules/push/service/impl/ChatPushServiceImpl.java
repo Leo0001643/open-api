@@ -90,6 +90,7 @@ public class ChatPushServiceImpl implements ChatPushService {
         PushBodyVo pushBodyVo = new PushBodyVo(msgId, PushBodyEnum.MSG, pushMsgVo);
         // 发送人
         pushBodyVo.setFromInfo(BeanUtil.toBean(from, PushFromVo.class).setUserType(from.getUserType().getCode()));
+        pushBodyVo.setRefMsg(from.getRefMsg());
         // 接收人
         if (group != null) {
             pushBodyVo.setGroupInfo(BeanUtil.toBean(group, PushToVo.class));

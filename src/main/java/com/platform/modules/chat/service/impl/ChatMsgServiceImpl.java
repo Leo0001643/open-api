@@ -164,7 +164,6 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         PushMsgEnum msgType = chatVo.getMsgType();
         Long refmsgId = chatVo.getRefMsgId();
 
-
         // 校验好友
         ChatFriend friend1 = friendService.getFriend(userId, friendId);
         if (friend1 == null) {
