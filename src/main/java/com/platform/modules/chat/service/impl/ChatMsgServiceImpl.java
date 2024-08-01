@@ -8,6 +8,7 @@ import com.platform.common.shiro.ShiroUtils;
 import com.platform.common.utils.TimerUtils;
 import com.platform.common.web.service.impl.BaseServiceImpl;
 import com.platform.modules.chat.dao.ChatMsgDao;
+import com.platform.modules.chat.dao.ChatUserDao;
 import com.platform.modules.chat.domain.*;
 import com.platform.modules.chat.enums.FriendTypeEnum;
 import com.platform.modules.chat.enums.MsgStatusEnum;
@@ -41,7 +42,8 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
 
     @Resource
     private ChatMsgDao chatMsgDao;
-
+    @Resource
+    private ChatUserDao chatUserDao;
     @Resource
     private ChatFriendService friendService;
 
@@ -186,13 +188,14 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         RefMsgVo refMsgVo = new RefMsgVo();
         if(refmsgId != null){
             ChatMsg refChatMsg = chatMsgDao.selectById(refmsgId);
+            ChatUser chatUser = chatUserDao.selectById(refChatMsg.getFromId());
             refMsgVo.setMsgType(refChatMsg.getMsgType());
             refMsgVo.setMsgId(refChatMsg.getId());
             refMsgVo.setContent(refChatMsg.getContent());
+            refMsgVo.setNickName(chatUser.getNickName());
         }
         // 保存消息
         ChatMsg chatMsg = this.saveMsg(chatVo);
-
         // 组装推送
         PushParamVo paramVo = ChatUser.initParam(chatUserService.getById(userId))
                 .setNickName(friend2.getRemark())
@@ -246,9 +249,11 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         RefMsgVo refMsgVo = new RefMsgVo();
         if(refMsgId != null){
             ChatMsg refChatMsg = chatMsgDao.selectById(refMsgId);
+            ChatUser chatUser = chatUserDao.selectById(refChatMsg.getFromId());
             refMsgVo.setMsgType(refChatMsg.getMsgType());
-            refMsgVo.setContent(refChatMsg.getContent());
             refMsgVo.setMsgId(refChatMsg.getId());
+            refMsgVo.setContent(refChatMsg.getContent());
+            refMsgVo.setNickName(chatUser.getNickName());
         }
 
         // 保存数据

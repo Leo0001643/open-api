@@ -14,4 +14,5 @@ public class RefMsgVo {
     private Long msgId;
     private String content;
     private PushMsgEnum msgType;
+    private String nickName;
 }
