@@ -22,6 +22,12 @@ public enum FriendTypeEnum {
      * 翻译机器人
      */
     TRANSLATION("translation", "在线客服2"),
+
+    /**
+     * 在线客服
+     */
+    SYSTEM_CUSTOMER("customer_service", "在线客服" ),
+
     /**
      * 自己
      */

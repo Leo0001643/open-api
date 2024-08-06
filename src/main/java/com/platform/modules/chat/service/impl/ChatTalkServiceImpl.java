@@ -7,9 +7,11 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.platform.common.enums.YesOrNoEnum;
 import com.platform.common.shiro.ShiroUtils;
 import com.platform.modules.chat.config.TencentConfig;
+import com.platform.modules.chat.domain.ChatUser;
 import com.platform.modules.chat.enums.ApplySourceEnum;
 import com.platform.modules.chat.enums.FriendTypeEnum;
 import com.platform.modules.chat.service.ChatTalkService;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,8 +52,8 @@ public class ChatTalkServiceImpl implements ChatTalkService {
     /**
      * 好友列表
      */
-    private static List<FriendVo06> friendList() {
-        // 客服二
+    private  List<FriendVo06> friendList() {
+       /* // 客服二
         Long weatherId = 15888888888L;
         FriendTypeEnum weatherType = FriendTypeEnum.WEATHER;
         FriendVo06 weather = new FriendVo06()
@@ -67,8 +70,23 @@ public class ChatTalkServiceImpl implements ChatTalkService {
                 .setChatNo(NumberUtil.toStr(translationId))
                 .setNickName(translationType.getInfo())
                 .setPortrait("http://wd157.com/upload/onlineService/onlineService2.png")
-                .setUserType(translationType);
-        return CollUtil.newArrayList(weather, translation);
+                .setUserType(translationType);*/
+
+        QueryWrapper<ChatUser> qw = new QueryWrapper<>();
+        qw.in("phone", Arrays.asList("15888888888", "18888888888"));
+        List<ChatUser> chatUsers = chatUserService.queryList(qw);
+
+        return chatUsers.stream().map(item -> {
+            FriendVo06 sysFriendVo = new FriendVo06()
+                    .setUserId(item.getUserId())
+                    .setChatNo(item.getChatNo())
+                    .setNickName(item.getNickName())
+                    .setPortrait(item.getPortrait())
+                    .setUserType(FriendTypeEnum.SYSTEM_CUSTOMER);
+            return sysFriendVo;
+        }).collect(Collectors.toList());
+
+//        return CollUtil.newArrayList(weather, translation);
     }
 
     @Override
