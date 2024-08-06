@@ -115,7 +115,10 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         Long userId = ShiroUtils.getUserId();
         Long friendId = chatVo.getUserId();
         String content = chatVo.getContent();
-        // 异步执行
+        PushMsgEnum msgType = chatVo.getMsgType();
+        Long refMsgId = chatVo.getRefMsgId();
+
+/*        // 异步执行
         TimerUtils.instance().addTask((timeout) -> {
             // 发送聊天
             PushParamVo paramVo = chatTalkService.talk(friendId, content);
@@ -124,7 +127,27 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
             }
             // 推送
             chatPushService.pushMsg(paramVo.setToId(userId).setMsgId(IdWorker.getId()), PushMsgEnum.TEXT);
-        }, 2, TimeUnit.SECONDS);
+        }, 2, TimeUnit.SECONDS);*/
+
+        RefMsgVo refMsgVo = new RefMsgVo();
+        if(refMsgId != null){
+            ChatMsg refChatMsg = chatMsgDao.selectById(refMsgId);
+            ChatUser chatUser = chatUserDao.selectById(refChatMsg.getFromId());
+            refMsgVo.setMsgType(refChatMsg.getMsgType());
+            refMsgVo.setMsgId(refChatMsg.getId());
+            refMsgVo.setContent(refChatMsg.getContent());
+            refMsgVo.setNickName(chatUser.getNickName());
+        }
+
+        ChatUser systemUser = chatUserService.getById(friendId);
+        PushParamVo paramVo = ChatUser.initParam(chatUserService.getById(userId))
+                .setNickName(systemUser.getNickName())
+                .setTop(YesOrNoEnum.YES)
+                .setContent(content)
+                .setToId(friendId)
+                .setMsgId(chatMsg.getId())
+                .setRefMsg(refMsgVo);
+        chatPushService.pushMsg(paramVo.setToId(userId).setMsgId(IdWorker.getId()), msgType);
         // 返回结果
         return doResult(MsgStatusEnum.NORMAL).setMsgId(chatMsg.getId());
     }
@@ -185,6 +208,7 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         if (toUser == null) {
             return doResult(MsgStatusEnum.FRIEND_DELETED);
         }
+
         RefMsgVo refMsgVo = new RefMsgVo();
         if(refmsgId != null){
             ChatMsg refChatMsg = chatMsgDao.selectById(refmsgId);
