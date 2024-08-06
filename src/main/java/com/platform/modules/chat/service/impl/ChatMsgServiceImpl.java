@@ -59,9 +59,6 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
     @Resource
     private ChatUserService chatUserService;
 
-    @Resource
-    private ChatTalkService chatTalkService;
-
     @Autowired
     public void setBaseDao() {
         super.setBaseDao(chatMsgDao);
@@ -79,7 +76,7 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         Long userId = ShiroUtils.getUserId();
         Long friendId = chatVo.getUserId();
         // 系统好友
-        if (friendId.equals(15888888888L) || friendId.equals(18888888888L)) {
+        if (friendId.equals(1820742670235197442L) || friendId.equals(1820753432026537986L)) {
             return sys(chatVo);
         }
         // 自己给自己发消息
