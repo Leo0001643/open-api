@@ -22,7 +22,7 @@ public class VersionConfig {
     /**
      * 版本开关
      */
-    public static YesOrNoEnum ENABLED = YesOrNoEnum.YES;
+    public static YesOrNoEnum ENABLED = YesOrNoEnum.NO;
 
     /**
      * 最低版本

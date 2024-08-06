@@ -28,8 +28,6 @@ public class BootWebSocketInterceptor extends HttpSessionHandshakeInterceptor {
                                    Map<String, Object> attributes) throws Exception {
         // 接受前端传来的参数
         String token = ((ServletServerHttpRequest) request).getServletRequest().getParameter(HeadConstant.TOKEN_HEADER_ADMIN);
-//        HttpServletResponse httpResponse = (HttpServletResponse) response;
-
         if (StringUtils.isEmpty(token)) {
             return false;
         }
