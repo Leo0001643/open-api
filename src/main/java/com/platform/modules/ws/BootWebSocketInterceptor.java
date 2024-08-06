@@ -10,10 +10,15 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 public class BootWebSocketInterceptor extends HttpSessionHandshakeInterceptor {
@@ -23,8 +28,9 @@ public class BootWebSocketInterceptor extends HttpSessionHandshakeInterceptor {
                                    Map<String, Object> attributes) throws Exception {
         // 接受前端传来的参数
         String token = ((ServletServerHttpRequest) request).getServletRequest().getParameter(HeadConstant.TOKEN_HEADER_ADMIN);
-        if (StringUtils.isEmpty(token)) {
+//        HttpServletResponse httpResponse = (HttpServletResponse) response;
 
+        if (StringUtils.isEmpty(token)) {
             return false;
         }
         TokenService tokenService = SpringUtil.getBean("tokenService");

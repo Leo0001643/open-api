@@ -50,23 +50,23 @@ public class ChatTalkServiceImpl implements ChatTalkService {
      * 好友列表
      */
     private static List<FriendVo06> friendList() {
-        // 天气机器人
-        Long weatherId = 10002L;
+        // 客服二
+        Long weatherId = 15888888888L;
         FriendTypeEnum weatherType = FriendTypeEnum.WEATHER;
         FriendVo06 weather = new FriendVo06()
                 .setUserId(weatherId)
                 .setChatNo(NumberUtil.toStr(weatherId))
                 .setNickName(weatherType.getInfo())
-                .setPortrait("http://103.143.80.82:9699/upload/onlineService/onlineService1.png")
+                .setPortrait("http://wd157.com/upload/onlineService/onlineService1.png")
                 .setUserType(weatherType);
-        // 翻译机器人
-        Long translationId = 10003L;
+        // 客服二
+        Long translationId = 18888888888L;
         FriendTypeEnum translationType = FriendTypeEnum.TRANSLATION;
         FriendVo06 translation = new FriendVo06()
                 .setUserId(translationId)
                 .setChatNo(NumberUtil.toStr(translationId))
                 .setNickName(translationType.getInfo())
-                .setPortrait("http://103.143.80.82:9699/upload/onlineService/onlineService2.png")
+                .setPortrait("http://wd157.com/upload/onlineService/onlineService2.png")
                 .setUserType(translationType);
         return CollUtil.newArrayList(weather, translation);
     }
