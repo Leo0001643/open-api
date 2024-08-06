@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +72,6 @@ public class ChatTalkServiceImpl implements ChatTalkService {
                 .setNickName(translationType.getInfo())
                 .setPortrait("http://wd157.com/upload/onlineService/onlineService2.png")
                 .setUserType(translationType);*/
-
         QueryWrapper<ChatUser> qw = new QueryWrapper<>();
         qw.in("phone", Arrays.asList("15888888888", "18888888888"));
         List<ChatUser> chatUsers = chatUserService.queryList(qw);
@@ -92,7 +92,10 @@ public class ChatTalkServiceImpl implements ChatTalkService {
     @Override
     public List<FriendVo06> queryFriendList() {
         Long userId = ShiroUtils.getUserId();
-        List<FriendVo06> userList = friendList();
+        List<FriendVo06> userList = new ArrayList<>();
+        if(userId != 15888888888L && userId!= 18888888888L){
+            userList = friendList();
+        }
         userList.add(BeanUtil.toBean(chatUserService.findById(userId), FriendVo06.class).setUserType(FriendTypeEnum.SELF));
         return userList;
     }
