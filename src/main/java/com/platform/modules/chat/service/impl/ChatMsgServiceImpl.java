@@ -147,7 +147,7 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
                 .setToId(friendId)
                 .setMsgId(chatMsg.getId())
                 .setRefMsg(refMsgVo);
-        chatPushService.pushMsg(paramVo.setToId(userId).setMsgId(IdWorker.getId()), msgType);
+        chatPushService.pushMsg(paramVo, msgType);
         // 返回结果
         return doResult(MsgStatusEnum.NORMAL).setMsgId(chatMsg.getId());
     }
