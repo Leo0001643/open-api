@@ -137,10 +137,11 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
             refMsgVo.setNickName(chatUser.getNickName());
         }
 
-        ChatUser systemUser = chatUserService.getById(friendId);
+        //ChatUser systemUser = chatUserService.getById(friendId);
         PushParamVo paramVo = ChatUser.initParam(chatUserService.getById(userId))
-                .setNickName(systemUser.getNickName())
+//                .setNickName(systemUser.getNickName())
                 .setTop(YesOrNoEnum.YES)
+//                .setPortrait(systemUser.getPortrait())
                 .setContent(content)
                 .setToId(friendId)
                 .setMsgId(chatMsg.getId())
