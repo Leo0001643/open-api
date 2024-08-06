@@ -76,7 +76,8 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         Long userId = ShiroUtils.getUserId();
         Long friendId = chatVo.getUserId();
         // 系统好友
-        if (friendId.equals(1820742670235197442L) || friendId.equals(1820753432026537986L)) {
+        if (friendId.equals(1820742670235197442L) || friendId.equals(1820753432026537986L)
+                || userId.equals(1820742670235197442L) || userId.equals(1820753432026537986L)) {
             return sys(chatVo);
         }
         // 自己给自己发消息
