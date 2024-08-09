@@ -13,6 +13,6 @@ public class StringsUtils {
         }
 
         // 使用正则表达式替换中间6位数字为星号
-        return phoneNumber.replaceAll("(\\d{2})\\d{6}(\\d{3})", "$1******$2");
+        return phoneNumber.replaceAll("(\\d{3})\\d{6}(\\d{2})", "$1******$2");
     }
 }
