@@ -19,6 +19,7 @@ import com.platform.common.shiro.ShiroUtils;
 import com.platform.common.utils.DeviceUtils;
 import com.platform.common.utils.IpUtils;
 import com.platform.common.utils.ServletUtils;
+import com.platform.common.utils.StringsUtils;
 import com.platform.common.web.service.impl.BaseServiceImpl;
 import com.platform.modules.auth.service.TokenService;
 import com.platform.modules.auth.vo.AuthVo01;
@@ -223,6 +224,7 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
         Long userId = ShiroUtils.getUserId();
 
         ChatUser chatUserDb = this.getById(userId);
+        chatUserDb.setPhone(StringsUtils.formatPhoneNumber(chatUserDb.getPhone()));
         if(chatUserDb.getStatus() == 2){
             tokenService.deleteToken(chatUserDb.getToken());
             ChatUser chatUser = new ChatUser().setUserId(userId).setToken(null).setLoginStatus(2);
