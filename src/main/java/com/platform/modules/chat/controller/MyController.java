@@ -90,7 +90,7 @@ public class MyController extends BaseController {
     public AjaxResult editNick(@Validated @RequestBody MyVo09 myVo) {
         ChatUser chatUser = new ChatUser()
                 .setUserId(ShiroUtils.getUserId())
-                .setPhone(myVo.getNickName());
+                .setNickName(myVo.getNickName());
         chatUserService.updateById(chatUser);
         return AjaxResult.successMsg("修改成功");
     }
@@ -101,10 +101,7 @@ public class MyController extends BaseController {
     @ApiVersion(VersionEnum.V1_0_0)
     @PostMapping("/editPhone")
     public AjaxResult editPhone(@Validated @RequestBody MyVo10 myVo) {
-        ChatUser chatUser = new ChatUser()
-                .setUserId(ShiroUtils.getUserId())
-                        .setPhone(myVo.getPhone());
-        chatUserService.updateById(chatUser);
+        chatUserService.editPhone(myVo.getPhone());
         return AjaxResult.successMsg("修改成功");
     }
 

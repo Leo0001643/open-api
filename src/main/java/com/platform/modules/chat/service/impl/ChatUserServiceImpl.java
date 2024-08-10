@@ -170,6 +170,24 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
     }
 
     @Override
+    public void editPhone(String phone) {
+        Long userId = ShiroUtils.getUserId();
+        String errMsg = "手机号已被占用，请重新输入";
+        // 校验
+        ChatUser cu = this.queryOne(new ChatUser().setPhone(phone));
+        if (cu != null && !userId.equals(cu.getUserId())) {
+            throw new BaseException(errMsg);
+        }
+        try {
+            // 更新
+            this.updateById(new ChatUser().setUserId(userId).setPhone(phone));
+        } catch (org.springframework.dao.DuplicateKeyException e) {
+            throw new BaseException(errMsg);
+        }
+
+    }
+
+    @Override
     public MyVo09 getInfo() {
         // 当前用户
         ChatUser cu = findById(ShiroUtils.getUserId());
