@@ -165,7 +165,6 @@ public class MyController extends BaseController {
         // 执行修改
         ChatUser chatUser = new ChatUser()
                 .setUserId(ShiroUtils.getUserId())
-                .setProvinces(myVo.getProvinces())
                 .setCity(myVo.getCity());
         chatUserService.updateById(chatUser);
         return AjaxResult.successMsg("修改成功");
