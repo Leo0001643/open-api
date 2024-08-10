@@ -87,10 +87,35 @@ public class MyController extends BaseController {
      */
     @ApiVersion(VersionEnum.V1_0_0)
     @PostMapping("/editNick")
-    public AjaxResult editNick(@Validated @RequestBody MyVo03 myVo) {
+    public AjaxResult editNick(@Validated @RequestBody MyVo09 myVo) {
         ChatUser chatUser = new ChatUser()
                 .setUserId(ShiroUtils.getUserId())
-                .setNickName(myVo.getNickName());
+                .setPhone(myVo.getNickName());
+        chatUserService.updateById(chatUser);
+        return AjaxResult.successMsg("修改成功");
+    }
+
+    /**
+     * 修改手机
+     */
+    @ApiVersion(VersionEnum.V1_0_0)
+    @PostMapping("/editPhone")
+    public AjaxResult editPhone(@Validated @RequestBody MyVo10 myVo) {
+        ChatUser chatUser = new ChatUser()
+                .setUserId(ShiroUtils.getUserId())
+                        .setPhone(myVo.getPhone());
+        chatUserService.updateById(chatUser);
+        return AjaxResult.successMsg("修改成功");
+    }
+
+    /**
+     * 修改地址
+     */
+    @ApiVersion(VersionEnum.V1_0_0)
+    @PostMapping("/editAddress")
+    public AjaxResult editAddress(@Validated @RequestBody MyVo11 myVo) {
+        ChatUser chatUser = new ChatUser()
+                .setUserId(ShiroUtils.getUserId()).setCity(myVo.getAddress());
         chatUserService.updateById(chatUser);
         return AjaxResult.successMsg("修改成功");
     }

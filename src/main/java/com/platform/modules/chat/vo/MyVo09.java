@@ -1,6 +1,4 @@
 package com.platform.modules.chat.vo;
-
-import com.platform.common.enums.GenderEnum;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
