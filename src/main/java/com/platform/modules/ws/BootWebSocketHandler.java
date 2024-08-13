@@ -84,6 +84,7 @@ public class BootWebSocketHandler extends TextWebSocketHandler {
      * 给某个用户发送消息
      */
     public void sendMsg(Long userId, String content) {
+        log.info("正在推送消息：用户ID:{},消息内容:{}", content);
         WebSocketSession session = POOL_SESSION.get(userId);
         if (session == null) {
             return;
