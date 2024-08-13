@@ -24,7 +24,7 @@ public class VersionInterceptor implements HandlerInterceptor {
         /**
          * 如果不属于HandlerMethod，则放行
          */
-        if (!(handler instanceof HandlerMethod)) {
+/*        if (!(handler instanceof HandlerMethod)) {
             return true;
         }
         if (YesOrNoEnum.NO.equals(VersionConfig.ENABLED)) {
@@ -38,7 +38,7 @@ public class VersionInterceptor implements HandlerInterceptor {
         String version = request.getHeader(HeadConstant.VERSION);
         if (VersionUtils.compareTo(version, VersionConfig.VERSION, request.getRequestURI()) < 0) {
             throw new BaseException(ResultCodeEnum.VERSION);
-        }
+        }*/
         return true;
 
     }

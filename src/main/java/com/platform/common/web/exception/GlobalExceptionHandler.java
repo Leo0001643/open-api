@@ -12,18 +12,16 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 /**
  * 全局异常处理器
  */
-@RestControllerAdvice
 @Slf4j
+@RestControllerAdvice
 public class GlobalExceptionHandler {
-
     @ExceptionHandler(Exception.class)
     public AjaxResult handleException(Exception e) {
         log.error("全局异常:" + e.getMessage(), e);
         /**
          * 路径不存在
          */
-        if (e instanceof NoHandlerFoundException
-                || e instanceof org.springframework.web.HttpRequestMethodNotSupportedException) {
+        if (e instanceof NoHandlerFoundException || e instanceof org.springframework.web.HttpRequestMethodNotSupportedException) {
             return AjaxResult.result(ResultCodeEnum.NOT_FOUND);
         }
         /**
@@ -35,13 +33,12 @@ public class GlobalExceptionHandler {
         /**
          * 自定义异常
          */
-        if (e instanceof BaseException) {
-            if (ResultCodeEnum.VERSION.equals(((BaseException) e).getResultCode())) {
-                return AjaxResult.result(ResultCodeEnum.VERSION);
-            }
-            return AjaxResult.fail(e.getMessage());
-        }
+//        if (e instanceof BaseException) {
+//            if (ResultCodeEnum.VERSION.equals(((BaseException) e).getResultCode())) {
+//                return AjaxResult.result(ResultCodeEnum.VERSION);
+//            }
+//            return AjaxResult.fail(e.getMessage());
+//        }
         return AjaxResult.fail();
     }
-
 }
