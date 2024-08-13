@@ -1,5 +1,4 @@
 package com.platform.modules.ws;
-
 import com.platform.common.constant.AppConstants;
 import com.platform.modules.push.service.ChatPushService;
 import lombok.SneakyThrows;
@@ -9,7 +8,6 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
@@ -54,7 +52,7 @@ public class BootWebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
-//        this.closeSession(session);
+        this.closeSession(session);
     }
 
     /**
@@ -90,13 +88,13 @@ public class BootWebSocketHandler extends TextWebSocketHandler {
         log.info("正在推送消息：用户ID:{},消息内容:{}",userId, content);
         WebSocketSession session = POOL_SESSION.get(userId);
         log.info("当前ID:{},会话池:{}", userId, POOL_SESSION);
-//        if (session == null) {
-//            return;
-//        }
-//        if (!session.isOpen()) {
-//            this.closeSession(session);
-//            return;
-//        }
+        if (session == null) {
+            return;
+        }
+        if (!session.isOpen()) {
+            this.closeSession(session);
+            return;
+        }
         try {
             session.sendMessage(new TextMessage(content));
             log.info("推送消息成功：用户ID:{},消息内容:{}", content);
