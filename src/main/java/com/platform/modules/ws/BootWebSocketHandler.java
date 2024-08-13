@@ -80,6 +80,7 @@ public class BootWebSocketHandler extends TextWebSocketHandler {
         // 移除
         POOL_SESSION.remove(userId);
         log.info("会话池移除会话userID:{}", userId);
+        log.info("当前会话池存在的ID:{}", POOL_SESSION.toString());
     }
 
     /**
@@ -88,13 +89,14 @@ public class BootWebSocketHandler extends TextWebSocketHandler {
     public void sendMsg(Long userId, String content) {
         log.info("正在推送消息：用户ID:{},消息内容:{}",userId, content);
         WebSocketSession session = POOL_SESSION.get(userId);
-        if (session == null) {
-            return;
-        }
-        if (!session.isOpen()) {
-            this.closeSession(session);
-            return;
-        }
+        log.info("当前ID:{},会话池:{}", userId, POOL_SESSION);
+//        if (session == null) {
+//            return;
+//        }
+//        if (!session.isOpen()) {
+//            this.closeSession(session);
+//            return;
+//        }
         try {
             session.sendMessage(new TextMessage(content));
             log.info("推送消息成功：用户ID:{},消息内容:{}", content);
