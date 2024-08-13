@@ -26,7 +26,7 @@
         <shiro.version>1.5.2</shiro.version>
         <sharding.version>4.1.1</sharding.version>
         <tencent.version>3.1.473</tencent.version>
-        <netty.version>4.1.31.Final</netty.version>
+        <netty.version>4.1.42.Final</netty.version>
         <aliyun-sdk-oss>3.11.2</aliyun-sdk-oss>
         <qiniu.version>7.8.0</qiniu.version>
         <qcloud.cos.version>5.6.3</qcloud.cos.version>
