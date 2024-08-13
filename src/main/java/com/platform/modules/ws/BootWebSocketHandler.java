@@ -54,7 +54,7 @@ public class BootWebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
-        this.closeSession(session);
+//        this.closeSession(session);
     }
 
     /**
@@ -80,7 +80,7 @@ public class BootWebSocketHandler extends TextWebSocketHandler {
         // 移除
         POOL_SESSION.remove(userId);
         log.info("会话池移除会话userID:{}", userId);
-        log.info("当前会话池存在的ID:{}", POOL_SESSION.toString());
+        log.info("当前会话池存在的ID:{}", POOL_SESSION);
     }
 
     /**
