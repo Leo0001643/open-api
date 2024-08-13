@@ -22,6 +22,7 @@ import com.platform.modules.push.enums.PushTalkEnum;
 import com.platform.modules.push.service.ChatPushService;
 import com.platform.modules.push.vo.PushParamVo;
 import com.platform.modules.push.vo.RefMsgVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +38,7 @@ import java.util.concurrent.TimeUnit;
  * q3z3
  * </p>
  */
+@Slf4j
 @Service("chatMsgService")
 public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements ChatMsgService {
 
@@ -147,6 +149,7 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
                 .setToId(friendId)
                 .setMsgId(chatMsg.getId())
                 .setRefMsg(refMsgVo);
+        log.info(">>>>>>发送消息-系统客服：{}", paramVo.toString());
         chatPushService.pushMsg(paramVo, msgType);
         // 返回结果
         return doResult(MsgStatusEnum.NORMAL).setMsgId(chatMsg.getId());

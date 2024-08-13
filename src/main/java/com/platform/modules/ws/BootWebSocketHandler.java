@@ -94,6 +94,7 @@ public class BootWebSocketHandler extends TextWebSocketHandler {
         }
         try {
             session.sendMessage(new TextMessage(content));
+            log.info("推送消息成功：用户ID:{},消息内容:{}", content);
         } catch (IOException e) {
             this.closeSession(session);
         }

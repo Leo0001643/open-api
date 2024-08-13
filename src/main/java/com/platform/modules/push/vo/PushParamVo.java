@@ -3,12 +3,14 @@ package com.platform.modules.push.vo;
 import com.platform.common.enums.YesOrNoEnum;
 import com.platform.modules.chat.enums.FriendTypeEnum;
 import lombok.Data;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
  * 消息发送人
  */
 @Data
+@ToString
 @Accessors(chain = true) // 链式调用
 public class PushParamVo {
 
