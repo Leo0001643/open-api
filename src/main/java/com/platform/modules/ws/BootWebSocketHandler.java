@@ -32,6 +32,7 @@ public class BootWebSocketHandler extends TextWebSocketHandler {
         Long userId = (Long) session.getAttributes().get(AppConstants.USER_ID);
         // 存储
         POOL_SESSION.put(userId, session);
+        log.info("会话池添加会话userID:{}", userId);
         // 离线消息
         chatPushService.pullMsg(userId);
     }
@@ -78,13 +79,14 @@ public class BootWebSocketHandler extends TextWebSocketHandler {
         }
         // 移除
         POOL_SESSION.remove(userId);
+        log.info("会话池移除会话userID:{}", userId);
     }
 
     /**
      * 给某个用户发送消息
      */
     public void sendMsg(Long userId, String content) {
-        log.info("正在推送消息：用户ID:{},消息内容:{}", content);
+        log.info("正在推送消息：用户ID:{},消息内容:{}",userId, content);
         WebSocketSession session = POOL_SESSION.get(userId);
         if (session == null) {
             return;
