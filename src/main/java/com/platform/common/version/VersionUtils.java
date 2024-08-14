@@ -30,6 +30,7 @@ public class VersionUtils {
      * @return 0:相同 >0:大于 <0:小于
      */
     public static int compareTo(String version1, String version2, String uri) {
+
         if (!matchVersion(version1)) {
             log.error("RequestURI：" + uri);
             log.error("传入版本格式有误version1-{}", version1);
@@ -72,6 +73,7 @@ public class VersionUtils {
                 .append(dataList.get(0))
                 .append(dataList.get(1))
                 .append(String.format("%03d", Integer.valueOf(dataList.get(2))));
+        log.info("version={}", builder);
         return Integer.valueOf(builder.toString());
     }
 
