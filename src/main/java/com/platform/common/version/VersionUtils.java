@@ -31,7 +31,6 @@ public class VersionUtils {
      */
     public static int compareTo(String version1, String version2, String uri) {
         log.info("version1={},version2={}",version1,version2);
-        version1 = "1.0.0";
         if (!matchVersion(version1)) {
             log.error("RequestURI：" + uri);
             log.error("传入版本格式有误version1-{}", version1);
