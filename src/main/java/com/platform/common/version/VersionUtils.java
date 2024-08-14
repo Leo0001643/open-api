@@ -30,6 +30,7 @@ public class VersionUtils {
      * @return 0:相同 >0:大于 <0:小于
      */
     public static int compareTo(String version1, String version2, String uri) {
+        log.info("version1={},version2={}",version1,version2);
         version1 = "1.0.1";
         if (!matchVersion(version1)) {
             log.error("RequestURI：" + uri);
