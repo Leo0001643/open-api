@@ -13,32 +13,32 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  * 全局异常处理器
  */
 @Slf4j
-//@RestControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
-//    @ExceptionHandler(Exception.class)
-//    public AjaxResult handleException(Exception e) {
-//        log.error("全局异常:" + e.getMessage(), e);
+    @ExceptionHandler(Exception.class)
+    public AjaxResult handleException(Exception e) {
+        log.error("全局异常:" + e.getMessage(), e);
         /**
          * 路径不存在
          */
-//        if (e instanceof NoHandlerFoundException || e instanceof org.springframework.web.HttpRequestMethodNotSupportedException) {
-//            return AjaxResult.result(ResultCodeEnum.NOT_FOUND);
-//        }
+        if (e instanceof NoHandlerFoundException || e instanceof org.springframework.web.HttpRequestMethodNotSupportedException) {
+            return AjaxResult.result(ResultCodeEnum.NOT_FOUND);
+        }
         /**
          * 校验异常
          */
-//        if (e instanceof MethodArgumentNotValidException) {
-//            return AjaxResult.fail(((MethodArgumentNotValidException) e).getBindingResult().getFieldError().getDefaultMessage());
-//        }
+        if (e instanceof MethodArgumentNotValidException) {
+            return AjaxResult.fail(((MethodArgumentNotValidException) e).getBindingResult().getFieldError().getDefaultMessage());
+        }
         /**
          * 自定义异常
          */
-//        if (e instanceof BaseException) {
-//            if (ResultCodeEnum.VERSION.equals(((BaseException) e).getResultCode())) {
-//                return AjaxResult.result(ResultCodeEnum.VERSION);
-//            }
-//            return AjaxResult.fail(e.getMessage());
-//        }
-//        return AjaxResult.fail();
-//    }
+        if (e instanceof BaseException) {
+            if (ResultCodeEnum.VERSION.equals(((BaseException) e).getResultCode())) {
+                return AjaxResult.result(ResultCodeEnum.VERSION);
+            }
+            return AjaxResult.fail(e.getMessage());
+        }
+        return AjaxResult.fail();
+    }
 }
