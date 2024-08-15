@@ -44,6 +44,10 @@ public class BootWebSocketHandler extends TextWebSocketHandler {
         // 获得客户端传来的消息
         String payload = message.getPayload();
         log.info("server 接收到消息 {}", payload);
+
+        Long userId = (Long) session.getAttributes().get(AppConstants.USER_ID);
+        POOL_SESSION.put(userId, session);
+
         session.sendMessage(new TextMessage("ok"));
     }
 
