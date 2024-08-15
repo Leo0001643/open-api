@@ -52,6 +52,7 @@ public class BootWebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+        log.info("连接超时断开了>>>>ID={},code={}",session.getId(), status.getCode());
         this.closeSession(session);
     }
 
@@ -60,6 +61,7 @@ public class BootWebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) {
+        log.info("连接异常断开了>>>>ID={},code={}",session.getId(), exception.getLocalizedMessage());
         this.closeSession(session);
     }
 
