@@ -79,8 +79,7 @@ public class BootWebSocketHandler extends TextWebSocketHandler {
         }
         // 移除
         POOL_SESSION.remove(userId);
-        log.info("会话池移除会话userID:{}", userId);
-        log.info("当前会话池存在的ID:{}", POOL_SESSION);
+        log.info("会话池移除会话userID:{}，当前会话池存在的ID:{}", userId, POOL_SESSION);
     }
 
     /**
