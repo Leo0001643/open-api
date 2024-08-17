@@ -34,8 +34,8 @@ public class AuthVo01 {
     private String code;*/
 
     /**
-     * 邮箱
+     * 推广码
      */
-    private String email;
+    private String promotionCode;
 
 }

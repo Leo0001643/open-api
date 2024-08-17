@@ -90,10 +90,11 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
             IPZone ipZone = qqWry.findIP(ip);
             address = ipZone.getMainInfo().concat(ipZone.getSubInfo());
         } catch (Exception e) {}
-
         String phone = authVo.getPhone();
         String password = authVo.getPassword();
         String nickName = authVo.getNickName();
+        String promotionCode = authVo.getPromotionCode();
+
         String msg = "此手机号码已注册过，请勿重复注册";
         // 验证手机号是否注册过
         if (this.queryCount(new ChatUser().setPhone(phone)) > 0) {
@@ -112,6 +113,7 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
                 .setLoginIp(ip)
                 .setDevice(DeviceUtils.detectDevice(request))
                 .setPhone(phone)
+                .setCode(promotionCode)
                 .setPassword(Md5Utils.credentials(password, salt))
                 .setCreateTime(DateUtil.date());
         try {
