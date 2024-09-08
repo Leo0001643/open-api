@@ -44,8 +44,7 @@ public class FileServiceImpl implements FileService {
         // 上传视频文件
         UploadFileVo videoFileVo = uploadService.uploadFile(videoFile);
         // screenShot
-        return BeanUtil.toBean(videoFileVo, UploadVideoVo.class)
-                .setScreenShot(videoFileVo.getFullPath() + AppConstants.VIDEO_PARAM);
+        return BeanUtil.toBean(videoFileVo, UploadVideoVo.class).setScreenShot(videoFileVo.getFullPath() + AppConstants.VIDEO_PARAM);
     }
 
     @Override

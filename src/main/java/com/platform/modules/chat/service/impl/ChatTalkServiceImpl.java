@@ -51,7 +51,7 @@ public class ChatTalkServiceImpl implements ChatTalkService {
      */
     private static List<FriendVo06> friendList() {
         // 天气机器人
-        Long weatherId = 10002L;
+ /*       Long weatherId = 10002L;
         FriendTypeEnum weatherType = FriendTypeEnum.WEATHER;
         FriendVo06 weather = new FriendVo06()
                 .setUserId(weatherId)
@@ -67,8 +67,8 @@ public class ChatTalkServiceImpl implements ChatTalkService {
                 .setChatNo(NumberUtil.toStr(translationId))
                 .setNickName(translationType.getInfo())
                 .setPortrait("http://103.143.80.82:9699/upload/onlineService/onlineService2.png")
-                .setUserType(translationType);
-        return CollUtil.newArrayList(weather, translation);
+                .setUserType(translationType);*/
+        return CollUtil.newArrayList();
     }
 
     @Override

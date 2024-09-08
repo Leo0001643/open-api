@@ -35,8 +35,7 @@ public class UploadLocalServiceImpl extends UploadBaseService implements UploadS
 
     @Override
     public Dict getToken(String fileType) {
-        return Dict.create()
-                .set("uploadType", UploadTypeEnum.LOCAL);
+        return Dict.create().set("uploadType", UploadTypeEnum.LOCAL);
     }
 
     @Override
@@ -62,8 +61,7 @@ public class UploadLocalServiceImpl extends UploadBaseService implements UploadS
             throw new RuntimeException("文件上传失败");
         }
         // 组装对象
-        UploadFileVo fileVo = format(fileName, serverUrl, fileKey, fileType, fileSize)
-                .setFullPath(serverUrl + fileKey);
+        UploadFileVo fileVo = format(fileName, serverUrl, fileKey, fileType, fileSize).setFullPath(serverUrl + fileKey);
         return fileVo;
     }
 
