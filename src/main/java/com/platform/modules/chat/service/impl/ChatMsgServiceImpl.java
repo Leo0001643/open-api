@@ -22,6 +22,7 @@ import com.platform.modules.push.enums.PushTalkEnum;
 import com.platform.modules.push.service.ChatPushService;
 import com.platform.modules.push.vo.PushParamVo;
 import com.platform.modules.push.vo.RefMsgVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +38,7 @@ import java.util.concurrent.TimeUnit;
  * q3z3
  * </p>
  */
+@Slf4j
 @Service("chatMsgService")
 public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements ChatMsgService {
 
@@ -59,9 +61,6 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
     @Resource
     private ChatUserService chatUserService;
 
-    @Resource
-    private ChatTalkService chatTalkService;
-
     @Autowired
     public void setBaseDao() {
         super.setBaseDao(chatMsgDao);
@@ -79,7 +78,8 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         Long userId = ShiroUtils.getUserId();
         Long friendId = chatVo.getUserId();
         // 系统好友
-        if (friendId.equals(10002L) || friendId.equals(10003L)) {
+        if (friendId.equals(1820742670235197442L) || friendId.equals(1820753432026537986L)
+                || userId.equals(1820742670235197442L) || userId.equals(1820753432026537986L)) {
             return sys(chatVo);
         }
         // 自己给自己发消息
@@ -115,7 +115,10 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         Long userId = ShiroUtils.getUserId();
         Long friendId = chatVo.getUserId();
         String content = chatVo.getContent();
-        // 异步执行
+        PushMsgEnum msgType = chatVo.getMsgType();
+        Long refMsgId = chatVo.getRefMsgId();
+
+/*        // 异步执行
         TimerUtils.instance().addTask((timeout) -> {
             // 发送聊天
             PushParamVo paramVo = chatTalkService.talk(friendId, content);
@@ -124,7 +127,30 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
             }
             // 推送
             chatPushService.pushMsg(paramVo.setToId(userId).setMsgId(IdWorker.getId()), PushMsgEnum.TEXT);
-        }, 2, TimeUnit.SECONDS);
+        }, 2, TimeUnit.SECONDS);*/
+
+        RefMsgVo refMsgVo = new RefMsgVo();
+        if(refMsgId != null){
+            ChatMsg refChatMsg = chatMsgDao.selectById(refMsgId);
+            ChatUser chatUser = chatUserDao.selectById(refChatMsg.getFromId());
+            refMsgVo.setMsgType(refChatMsg.getMsgType());
+            refMsgVo.setMsgId(refChatMsg.getId());
+            refMsgVo.setContent(refChatMsg.getContent());
+            refMsgVo.setNickName(chatUser.getNickName());
+        }
+
+        //ChatUser systemUser = chatUserService.getById(friendId);
+        ChatUser chatUser = chatUserService.getById(userId);
+        PushParamVo paramVo = ChatUser.initParam(chatUser)
+//                .setNickName(systemUser.getNickName())
+                .setTop(YesOrNoEnum.YES)
+                .setPortrait(chatUser.getPortrait())
+                .setContent(content)
+                .setToId(friendId)
+                .setMsgId(chatMsg.getId())
+                .setRefMsg(refMsgVo);
+        log.info(">>>>>>发送消息-系统客服：{}", paramVo.toString());
+        chatPushService.pushMsg(paramVo, msgType);
         // 返回结果
         return doResult(MsgStatusEnum.NORMAL).setMsgId(chatMsg.getId());
     }
@@ -185,6 +211,7 @@ public class ChatMsgServiceImpl extends BaseServiceImpl<ChatMsg> implements Chat
         if (toUser == null) {
             return doResult(MsgStatusEnum.FRIEND_DELETED);
         }
+
         RefMsgVo refMsgVo = new RefMsgVo();
         if(refmsgId != null){
             ChatMsg refChatMsg = chatMsgDao.selectById(refmsgId);

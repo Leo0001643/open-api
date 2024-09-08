@@ -50,8 +50,8 @@ public class ChatTalkServiceImpl implements ChatTalkService {
      * 好友列表
      */
     private static List<FriendVo06> friendList() {
-        // 天气机器人
- /*       Long weatherId = 10002L;
+/*        // 天气机器人
+        Long weatherId = 10002L;
         FriendTypeEnum weatherType = FriendTypeEnum.WEATHER;
         FriendVo06 weather = new FriendVo06()
                 .setUserId(weatherId)

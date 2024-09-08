@@ -70,6 +70,7 @@ public class ChatPushServiceImpl implements ChatPushService {
      * 发送消息
      */
     private void doMsg(PushParamVo from, PushParamVo group, PushMsgEnum msgType) {
+        log.info("组装消息中...");
         Long userId = from.getToId();
         // 组装消息体
         PushMsgVo pushMsgVo = new PushMsgVo()

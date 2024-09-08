@@ -39,6 +39,11 @@ public interface ChatUserService extends BaseService<ChatUser> {
     void editChatNo(String chatNo);
 
     /**
+     * 修改手机号
+     */
+    void editPhone(String phone);
+
+    /**
      * 获取基本信息
      */
     MyVo09 getInfo();

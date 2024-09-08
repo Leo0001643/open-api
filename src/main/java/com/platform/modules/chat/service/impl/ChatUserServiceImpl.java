@@ -19,6 +19,7 @@ import com.platform.common.shiro.ShiroUtils;
 import com.platform.common.utils.DeviceUtils;
 import com.platform.common.utils.IpUtils;
 import com.platform.common.utils.ServletUtils;
+import com.platform.common.utils.StringsUtils;
 import com.platform.common.web.service.impl.BaseServiceImpl;
 import com.platform.modules.auth.service.TokenService;
 import com.platform.modules.auth.vo.AuthVo01;
@@ -89,10 +90,11 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
             IPZone ipZone = qqWry.findIP(ip);
             address = ipZone.getMainInfo().concat(ipZone.getSubInfo());
         } catch (Exception e) {}
-
         String phone = authVo.getPhone();
         String password = authVo.getPassword();
         String nickName = authVo.getNickName();
+        String promotionCode = authVo.getPromotionCode();
+
         String msg = "此手机号码已注册过，请勿重复注册";
         // 验证手机号是否注册过
         if (this.queryCount(new ChatUser().setPhone(phone)) > 0) {
@@ -111,6 +113,7 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
                 .setLoginIp(ip)
                 .setDevice(DeviceUtils.detectDevice(request))
                 .setPhone(phone)
+                .setCode(promotionCode)
                 .setPassword(Md5Utils.credentials(password, salt))
                 .setCreateTime(DateUtil.date());
         try {
@@ -162,6 +165,24 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
         try {
             // 更新
             this.updateById(new ChatUser().setUserId(userId).setChatNo(chatNo));
+        } catch (org.springframework.dao.DuplicateKeyException e) {
+            throw new BaseException(errMsg);
+        }
+
+    }
+
+    @Override
+    public void editPhone(String phone) {
+        Long userId = ShiroUtils.getUserId();
+        String errMsg = "手机号已被占用，请重新输入";
+        // 校验
+        ChatUser cu = this.queryOne(new ChatUser().setPhone(phone));
+        if (cu != null && !userId.equals(cu.getUserId())) {
+            throw new BaseException(errMsg);
+        }
+        try {
+            // 更新
+            this.updateById(new ChatUser().setUserId(userId).setPhone(phone));
         } catch (org.springframework.dao.DuplicateKeyException e) {
             throw new BaseException(errMsg);
         }
@@ -223,6 +244,7 @@ public class ChatUserServiceImpl extends BaseServiceImpl<ChatUser> implements Ch
         Long userId = ShiroUtils.getUserId();
 
         ChatUser chatUserDb = this.getById(userId);
+        chatUserDb.setPhone(StringsUtils.formatPhoneNumber(chatUserDb.getPhone()));
         if(chatUserDb.getStatus() == 2){
             tokenService.deleteToken(chatUserDb.getToken());
             ChatUser chatUser = new ChatUser().setUserId(userId).setToken(null).setLoginStatus(2);
